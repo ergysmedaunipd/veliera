@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
     public function index()
     {
-        return view('about');
+        $contact = Contact::first(); // Fetch the contact information
+        return view('about', compact('contact'));
     }
 }
