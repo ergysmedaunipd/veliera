@@ -25,11 +25,18 @@ class CoreValueController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'icon' => 'required|string|max:50', // You can define an icon set or leave it as free text
+            'title_sq' => 'required|string|max:255',
+            'icon' => 'required|string|max:50',
             'description' => 'required|string',
+            'description_sq' => 'required|string',
         ]);
 
-        CoreValue::create($validated);
+        $coreValue = new CoreValue();
+        $coreValue->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
+        $coreValue->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
+        $coreValue->icon = $request->icon;
+
+        $coreValue->save();
 
         return redirect()->route('home.modify.index')->with('success', 'Core value created successfully!');
     }
@@ -45,11 +52,17 @@ class CoreValueController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_sq' => 'required|string|max:255',
             'icon' => 'required|string|max:50',
             'description' => 'required|string',
+            'description_sq' => 'required|string',
         ]);
 
-        $coreValue->update($validated);
+        $coreValue->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
+        $coreValue->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
+        $coreValue->icon = $request->icon;
+
+        $coreValue->save();
 
         return redirect()->route('home.modify.index')->with('success', 'Core value updated successfully!');
     }

@@ -33,15 +33,14 @@
                     <tbody>
                     @foreach ($publications as $publication)
                         <tr>
-                            <td class="border px-4 py-2">{{ $publication->title }}</td>
-                            <td class="border px-4 py-2">{{ Str::limit($publication->description, 50) }}</td>
+                            <td class="border px-4 py-2">{{ $publication->getTranslation('title', app()->getLocale()) }}</td>
+                            <td class="border px-4 py-2">{{ Str::limit($publication->getTranslation('description', app()->getLocale()), 50) }}</td>
                             <td class="border px-4 py-2">
                                 @if ($publication->cover_photo)
                                     <img src="{{ asset('storage/' . $publication->cover_photo) }}" alt="{{ $publication->cover_photo }}" width="100">
                                 @endif
                             </td>
                             <td class="border px-4 py-2">
-
                                 @if ($publication->file)
                                     <a href="{{ asset('storage/' . $publication->file) }}" class="text-blue-500" download>Download</a>
                                 @endif
@@ -59,7 +58,6 @@
                                         {{ __('Delete') }}
                                     </x-danger-button>
                                 </form>
-
                             </td>
                         </tr>
                     @endforeach

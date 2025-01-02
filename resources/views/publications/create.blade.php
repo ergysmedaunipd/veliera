@@ -22,13 +22,23 @@
                     @csrf
 
                     <div class="mb-4">
-                        <x-input-label for="title" :value="__('Title')" />
+                        <x-input-label for="title" :value="__('Title (English)')" />
                         <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" required />
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="description" :value="__('Description')" />
+                        <x-input-label for="title_sq" :value="__('Title (Albanian)')" />
+                        <x-text-input id="title_sq" name="title_sq" type="text" class="mt-1 block w-full" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="description" :value="__('Description (English)')" />
                         <x-textarea id="description" name="description" class="mt-1 block w-full" required></x-textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="description_sq" :value="__('Description (Albanian)')" />
+                        <x-textarea id="description_sq" name="description_sq" class="mt-1 block w-full" required></x-textarea>
                     </div>
 
                     <div class="mb-4">

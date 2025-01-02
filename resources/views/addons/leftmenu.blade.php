@@ -1,30 +1,36 @@
+<style>
+    .active {
+        font-weight: bold;
+    }
+</style>
 <div id="sidebar">
     <div class="inner">
-
-        <!-- Search -->
-        <section id="search" class="alt">
-            <form method="post" action="#">
-                <input type="text" name="query" id="query" placeholder="Search Veliera" />
-            </form>
-        </section>
 
         <!-- Menu -->
         <nav id="menu">
             <header class="major">
-                <h2>Menu</h2>
+                <h2>{{ __('main.menu') }}</h2>
             </header>
             <ul>
-                <li><a href="{{ route('home') }}">Home</a></li>
-                <li><a href="{{ route('about') }}">About Us</a></li>
-                <li><a href="{{ route('programs') }}">Our Programs</a></li>
-                <li><a href="{{ route('publicationsLanding') }}">Publications</a></li>
+                <li class="{{ request()->routeIs('home') ? 'active' : '' }}">
+                    <a href="{{ route('home') }}">{{ __('main.home') }}</a>
+                </li>
+                <li class="{{ request()->routeIs('about') ? 'active' : '' }}">
+                    <a href="{{ route('about') }}">{{ __('main.about_us') }}</a>
+                </li>
+                <li class="{{ request()->routeIs('programsLanding') ? 'active' : '' }}">
+                    <a href="{{ route('programsLanding') }}">{{ __('main.our_programs') }}</a>
+                </li>
+                <li class="{{ request()->routeIs('publicationsLanding') ? 'active' : '' }}">
+                    <a href="{{ route('publicationsLanding') }}">{{ __('main.publications') }}</a>
+                </li>
             </ul>
         </nav>
 
         <!-- Section -->
         <section>
             <header class="major">
-                <h2>Get in Touch</h2>
+                <h2>{{ __('main.get_in_touch') }}</h2>
             </header>
             <p>{{$contact->message}}</p>
             <ul class="contact">

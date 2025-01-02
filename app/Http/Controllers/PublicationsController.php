@@ -12,7 +12,9 @@ class PublicationsController extends Controller
     public function landingIndex()
     {
         $contact = Contact::first(); // Fetch the contact information
-        return view('publications' , compact('contact'));
+        //get all publications sorted by latest created ad
+        $publications = Publication::latest()->get();
+        return view('publications' , compact('contact','publications'));
     }
     public function show($id)
     {
@@ -37,9 +39,11 @@ class PublicationsController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_sq' => 'required|string|max:255',
             'description' => 'required|string',
-            'cover_photo' => 'nullable|image|max:2048',
-            'file' => 'nullable|mimes:pdf,doc,docx,txt|max:10240', // File validation
+            'description_sq' => 'required|string',
+            'cover_photo' => 'required|image|max:2048',
+            'file' => 'nullable|mimes:pdf,doc,docx,txt|max:10240',
         ]);
 
         if ($request->hasFile('cover_photo')) {
@@ -50,7 +54,13 @@ class PublicationsController extends Controller
             $validated['file'] = $request->file('file')->store('images', 'public');
         }
 
-        Publication::create($validated);
+        $publication = new Publication();
+        $publication->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
+        $publication->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
+        $publication->cover_photo = $validated['cover_photo'];
+        $publication->file = $validated['file'] ?? null;
+
+        $publication->save();
 
         return redirect()->route('publications.index')->with('success', 'Publication created successfully.');
     }
@@ -64,7 +74,9 @@ class PublicationsController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_sq' => 'required|string|max:255',
             'description' => 'required|string',
+            'description_sq' => 'required|string',
             'cover_photo' => 'nullable|image|max:2048',
             'file' => 'nullable|mimes:pdf,doc,docx,txt|max:10240',
         ]);
@@ -83,8 +95,12 @@ class PublicationsController extends Controller
             $validated['file'] = $request->file('file')->store('images', 'public');
         }
 
-        $publication->update($validated);
+        $publication->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
+        $publication->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
+        $publication->cover_photo = $validated['cover_photo'] ?? $publication->cover_photo;
+        $publication->file = $validated['file'] ?? $publication->file;
 
+        $publication->save();
         return redirect()->route('publications.index')->with('success', 'Publication updated successfully.');
     }
 

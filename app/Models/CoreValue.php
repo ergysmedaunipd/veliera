@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class CoreValue extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     // Specify the table name (optional if the table name follows Laravel's convention)
     protected $table = 'core_values';
@@ -16,6 +17,11 @@ class CoreValue extends Model
     protected $fillable = [
         'title',
         'icon',
+        'description',
+    ];
+
+    public $translatable = [
+        'title',
         'description',
     ];
 

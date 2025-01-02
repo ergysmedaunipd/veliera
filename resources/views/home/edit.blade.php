@@ -13,21 +13,39 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <x-input-label for="title" :value="__('Title')" />
-                        <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" value="{{ old('title', $banner->title) }}" required />
+                        <x-input-label for="title" :value="__('Title (English)')" />
+                        <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" value="{{ old('title', $banner->getTranslation('title', 'en')) }}" required />
                         <x-input-error class="mt-2" :messages="$errors->get('title')" />
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="subtitle" :value="__('Subtitle')" />
-                        <x-text-input id="subtitle" name="subtitle" type="text" class="mt-1 block w-full" value="{{ old('subtitle', $banner->subtitle) }}" required />
+                        <x-input-label for="title_sq" :value="__('Title (Albanian)')" />
+                        <x-text-input id="title_sq" name="title_sq" type="text" class="mt-1 block w-full" value="{{ old('title_sq', $banner->getTranslation('title', 'sq')) }}" required />
+                        <x-input-error class="mt-2" :messages="$errors->get('title_sq')" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="subtitle" :value="__('Subtitle (English)')" />
+                        <x-text-input id="subtitle" name="subtitle" type="text" class="mt-1 block w-full" value="{{ old('subtitle', $banner->getTranslation('subtitle', 'en')) }}" required />
                         <x-input-error class="mt-2" :messages="$errors->get('subtitle')" />
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="description" :value="__('Description')" />
-                        <x-textarea id="description" name="description" class="mt-1 block w-full" required>{{ old('description', $banner->description) }}</x-textarea>
+                        <x-input-label for="subtitle_sq" :value="__('Subtitle (Albanian)')" />
+                        <x-text-input id="subtitle_sq" name="subtitle_sq" type="text" class="mt-1 block w-full" value="{{ old('subtitle_sq', $banner->getTranslation('subtitle', 'sq')) }}" required />
+                        <x-input-error class="mt-2" :messages="$errors->get('subtitle_sq')" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="description" :value="__('Description (English)')" />
+                        <x-textarea id="description" name="description" class="mt-1 block w-full" required>{{ old('description', $banner->getTranslation('description', 'en')) }}</x-textarea>
                         <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                    </div>
+
+                    <div class="mb-4">
+                        <x-input-label for="description_sq" :value="__('Description (Albanian)')" />
+                        <x-textarea id="description_sq" name="description_sq" class="mt-1 block w-full" required>{{ old('description_sq', $banner->getTranslation('description', 'sq')) }}</x-textarea>
+                        <x-input-error class="mt-2" :messages="$errors->get('description_sq')" />
                     </div>
 
                     <div class="mb-4">

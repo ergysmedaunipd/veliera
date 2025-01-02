@@ -6,12 +6,12 @@
     <section id="banner">
         <div class="content">
             <header>
-                <h1>{{  $publication->title ?? ' ' }}</h1>
+                <h1>{{ $publication->getTranslation('title', app()->getLocale()) ?? ' ' }}</h1>
             </header>
 
             <!-- If banner image exists, display it, else fallback to default image -->
             <img style="height: 25vh; width: auto; display: block; margin: 0 auto; object-fit: cover;" src="{{ asset($publication->image ? 'storage/' . $publication->image : 'build/assets/images/logo_png.png') }}" alt="Community Event"/>
-            <p>{{ $publication->description ?? '' }}</p>
+            <p>{{ $publication->getTranslation('description', app()->getLocale()) ?? '' }}</p>
         </div>
     </section>
 

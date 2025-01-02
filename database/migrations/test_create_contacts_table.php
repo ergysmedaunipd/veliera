@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('core_values', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('icon');
-            $table->text('description');
+            $table->string('email');
+            $table->string('phone');
+            $table->json('address');
+            $table->json('message');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('core_values');
+        Schema::dropIfExists('contacts');
     }
 };

@@ -13,20 +13,21 @@ class ContactController extends Controller
             'email' => 'required|email',
             'phone' => 'required|string',
             'address' => 'required|string',
+            'address_sq' => 'required|string',
             'message' => 'required|string',
+            'message_sq' => 'required|string',
         ]);
 
         // Assume a single contact record exists
-        $contact = Contact::first();
+        $contact = Contact::first() ?? new Contact();
 
-        if (!$contact) {
-            $contact = new Contact();
-        }
+        $contact->setTranslations('address', ['en' => $request->address, 'sq' => $request->address_sq]);
+        $contact->setTranslations('message', ['en' => $request->message, 'sq' => $request->message_sq]);
 
-        $contact->updateOrCreate(
-            ['id' => $contact->id ?? null],
-            $request->only(['email', 'phone', 'address', 'message'])
-        );
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+
+        $contact->save();
 
         return redirect()->back()->with('success', 'Contact information updated successfully.');
     }

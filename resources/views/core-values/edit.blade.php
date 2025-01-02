@@ -11,9 +11,15 @@
                 <form action="{{ route('core-values.update', $coreValue) }}" method="POST">
                     @csrf
                     @method('PUT')
+
                     <div class="mb-4">
-                        <label for="title" class="block text-gray-700">{{ __('Title') }}</label>
-                        <input type="text" name="title" id="title" class="mt-1 block w-full" value="{{ $coreValue->title }}" required>
+                        <label for="title" class="block text-gray-700">{{ __('Title (English)') }}</label>
+                        <input type="text" name="title" id="title" class="mt-1 block w-full" value="{{ $coreValue->getTranslation('title', 'en') }}" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="title_sq" class="block text-gray-700">{{ __('Title (Albanian)') }}</label>
+                        <input type="text" name="title_sq" id="title_sq" class="mt-1 block w-full" value="{{ $coreValue->getTranslation('title', 'sq') }}" required>
                     </div>
 
                     <div class="mb-4">
@@ -22,8 +28,13 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="description" class="block text-gray-700">{{ __('Description') }}</label>
-                        <textarea name="description" id="description" rows="4" class="mt-1 block w-full" required>{{ $coreValue->description }}</textarea>
+                        <label for="description" class="block text-gray-700">{{ __('Description (English)') }}</label>
+                        <textarea name="description" id="description" rows="4" class="mt-1 block w-full" required>{{ $coreValue->getTranslation('description', 'en') }}</textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="description_sq" class="block text-gray-700">{{ __('Description (Albanian)') }}</label>
+                        <textarea name="description_sq" id="description_sq" rows="4" class="mt-1 block w-full" required>{{ $coreValue->getTranslation('description', 'sq') }}</textarea>
                     </div>
 
                     <div class="flex justify-end">

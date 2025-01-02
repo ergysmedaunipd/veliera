@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CoreValueController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramsController;
 use App\Http\Controllers\PublicationsController;
@@ -11,9 +12,14 @@ use App\Models\Banner;
 use App\Models\Contact;
 use App\Models\CoreValue;
 use App\Models\Publication;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
+
 
 Route::get('/', function () {
+
     // Retrieve the first banner from the database
     $banner = Banner::first();
     $coreValues = CoreValue::all();  // Fetch all core values
@@ -28,11 +34,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/programs', [ProgramsController::class, 'index'])->name('programs');
+Route::get('/programsLanding', [ProgramsController::class, 'landingIndex'])->name('programsLanding');
+Route::get('/programsLanding/{id}', [ProgramsController::class, 'show'])->name('programsLandingShow');
 Route::get('/publicationsLanding', [PublicationsController::class, 'landingIndex'])->name('publicationsLanding');
 Route::get('/publicationsLanding/{id}', [PublicationsController::class, 'show'])->name('publicationsLandingShow');
+Route::get('lang/{locale}', [LanguageController::class, 'changeLanguage'])->name('lang.change');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -67,6 +75,23 @@ Route::middleware('auth')->group(function () {
         Route::get('{publication}/edit', [PublicationsController::class, 'edit'])->name('edit');
         Route::put('{publication}', [PublicationsController::class, 'update'])->name('update');
         Route::delete('{publication}', [PublicationsController::class, 'destroy'])->name('destroy');
+    });
+    Route::prefix('programs')->name('programs.')->group(function() {
+        Route::get('/', [ProgramsController::class, 'index'])->name('index');
+        Route::get('create', [ProgramsController::class, 'create'])->name('create');
+        Route::post('/', [ProgramsController::class, 'store'])->name('store');
+        Route::get('{program}/edit', [ProgramsController::class, 'edit'])->name('edit');
+        Route::put('{program}', [ProgramsController::class, 'update'])->name('update');
+        Route::delete('{program}', [ProgramsController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('members')->name('members.')->group(function () {
+        Route::get('/', [AboutController::class, 'aboutIndex'])->name('index');
+        Route::get('/create', [AboutController::class, 'create'])->name('create');
+        Route::post('/', [AboutController::class, 'store'])->name('store');
+        Route::get('/{member}/edit', [AboutController::class, 'edit'])->name('edit');
+        Route::put('/{member}', [AboutController::class, 'update'])->name('update');
+        Route::delete('/{member}', [AboutController::class, 'destroy'])->name('destroy');
     });
 
 });

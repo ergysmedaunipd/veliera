@@ -26,6 +26,16 @@
                         {{ __('Publications') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('programs.index')" :active="request()->routeIs('programs.index')">
+                        {{ __('Programs') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('members.index')" :active="request()->routeIs('members.index')">
+                        {{ __('About Us') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

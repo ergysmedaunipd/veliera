@@ -42,17 +42,24 @@ class HomeController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_sq' => 'required|string|max:255',
             'subtitle' => 'required|string|max:255',
+            'subtitle_sq' => 'required|string|max:255',
             'description' => 'required|string',
+            'description_sq' => 'required|string',
             'side_image' => 'required|image',
             'top_image' => 'required|image',
         ]);
 
-        // Handle file uploads
-        $validated['side_image'] = $request->file('side_image')->store('images', 'public');
-        $validated['top_image'] = $request->file('top_image')->store('images', 'public');
+        $banner = new Banner();
+        $banner->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
+        $banner->setTranslations('subtitle', ['en' => $request->subtitle, 'sq' => $request->subtitle_sq]);
+        $banner->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
 
-        Banner::create($validated);
+        $banner->side_image = $request->file('side_image')->store('images', 'public');
+        $banner->top_image = $request->file('top_image')->store('images', 'public');
+
+        $banner->save();
 
         return redirect()->route('home.modify.index')->with('success', 'Banner created successfully!');
     }
@@ -68,30 +75,30 @@ class HomeController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_sq' => 'required|string|max:255',
             'subtitle' => 'required|string|max:255',
+            'subtitle_sq' => 'required|string|max:255',
             'description' => 'required|string',
+            'description_sq' => 'required|string',
             'side_image' => 'nullable|image',
             'top_image' => 'nullable|image',
         ]);
 
+        $banner->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
+        $banner->setTranslations('subtitle', ['en' => $request->subtitle, 'sq' => $request->subtitle_sq]);
+        $banner->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
+
         if ($request->hasFile('side_image')) {
-            // Delete the old side image if exists
-            if ($banner->side_image) {
-                Storage::delete('public/' . $banner->side_image);
-            }
-            $validated['side_image'] = $request->file('side_image')->store('images', 'public');
+            Storage::delete('public/' . $banner->side_image);
+            $banner->side_image = $request->file('side_image')->store('images', 'public');
         }
 
         if ($request->hasFile('top_image')) {
-            // Delete the old top image if exists
-            if ($banner->top_image) {
-                Storage::delete('public/' . $banner->top_image);
-            }
-            $validated['top_image'] = $request->file('top_image')->store('images', 'public');
+            Storage::delete('public/' . $banner->top_image);
+            $banner->top_image = $request->file('top_image')->store('images', 'public');
         }
 
-        $banner->update($validated);
-
+        $banner->save();
         return redirect()->route('home.modify.index')->with('success', 'Banner updated successfully!');
     }
 

@@ -82,9 +82,9 @@
                 <div class="mt-8">
                     <div class="flex justify-end mb-4">
                         <!-- Create New Core Value Button -->
-                            <x-primary-button>
-                                <a href="{{ route('core-values.create') }}" class="text-white">{{ __('Create New Core Value') }}</a>
-                            </x-primary-button>
+                        <x-primary-button>
+                            <a href="{{ route('core-values.create') }}" class="text-white">{{ __('Create New Core Value') }}</a>
+                        </x-primary-button>
                     </div>
 
                     <h3 class="font-semibold text-xl text-gray-800">{{ __('Core Values') }}</h3>
@@ -161,16 +161,28 @@
                             <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" value="{{ $contact->phone??'' }}" required />
                         </div>
 
-                        <!-- Address -->
+                        <!-- Address (English) -->
                         <div class="mb-4">
-                            <x-input-label for="address" :value="__('Address')" />
-                            <x-textarea id="address" name="address" rows="1" class="mt-1 block w-full" required>{{ $contact->address??'' }}</x-textarea>
+                            <x-input-label for="address" :value="__('Address (English)')" />
+                            <x-textarea id="address" name="address" rows="1" class="mt-1 block w-full" required>{{ $contact ? $contact->getTranslation('address', 'en') : '' }}</x-textarea>
                         </div>
 
-                        <!-- Message -->
+                        <!-- Address (Albanian) -->
                         <div class="mb-4">
-                            <x-input-label for="message" :value="__('Message')" />
-                            <x-textarea id="message" name="message" rows="1" class="mt-1 block w-full" required>{{ $contact->message??'' }}</x-textarea>
+                            <x-input-label for="address_sq" :value="__('Address (Albanian)')" />
+                            <x-textarea id="address_sq" name="address_sq" rows="1" class="mt-1 block w-full" required>{{ $contact ? $contact->getTranslation('address', 'sq') : '' }}</x-textarea>
+                        </div>
+
+                        <!-- Message (English) -->
+                        <div class="mb-4">
+                            <x-input-label for="message" :value="__('Message (English)')" />
+                            <x-textarea id="message" name="message" rows="1" class="mt-1 block w-full" required>{{ $contact ? $contact->getTranslation('message', 'en') : '' }}</x-textarea>
+                        </div>
+
+                        <!-- Message (Albanian) -->
+                        <div class="mb-4">
+                            <x-input-label for="message_sq" :value="__('Message (Albanian)')" />
+                            <x-textarea id="message_sq" name="message_sq" rows="1" class="mt-1 block w-full" required>{{ $contact ? $contact->getTranslation('message', 'sq') : '' }}</x-textarea>
                         </div>
 
                         <!-- Submit Button -->
