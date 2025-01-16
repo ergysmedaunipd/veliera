@@ -47,8 +47,8 @@
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="file" :value="__('File (Optional)')" />
-                        <x-text-input id="file" name="file" type="file" class="mt-1 block w-full" />
+                        <x-input-label for="files" :value="__('Files (Optional)')" />
+                        <x-text-input id="files" name="files[]" type="file" class="mt-1 block w-full" multiple />
                     </div>
 
                     <x-primary-button>

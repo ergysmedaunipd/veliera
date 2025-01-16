@@ -22,11 +22,11 @@
 
                 <table class="table-auto w-full">
                     <thead>
-                    <tr >
+                    <tr>
                         <th class="px-4 py-2">Title</th>
                         <th class="px-4 py-2">Description</th>
                         <th class="px-4 py-2">Cover Photo</th>
-                        <th class="px-4 py-2">File</th>
+                        <th class="px-4 py-2">Files</th>
                         <th class="px-4 py-2">Actions</th>
                     </tr>
                     </thead>
@@ -41,11 +41,13 @@
                                 @endif
                             </td>
                             <td class="border px-4 py-2">
-                                @if ($publication->file)
-                                    <a href="{{ asset('storage/' . $publication->file) }}" class="text-blue-500" download>Download</a>
-                                @endif
+                                @foreach ($publication->files as $file)
+                                    <div class="mt-2">
+                                        <a href="{{ asset('storage/' . $file->file_path) }}" class="text-blue-500" target="_blank">Download File</a>
+                                    </div>
+                                @endforeach
                             </td>
-                            <td class="border px-4 py-2" >
+                            <td class="border px-4 py-2">
                                 <!-- Edit Button -->
                                 <x-primary-button>
                                     <a href="{{ route('publications.edit', $publication) }}" class="text-white">{{ __('Edit') }}</a>

@@ -45,11 +45,19 @@
                     <div class="mb-4">
                         <x-input-label for="cover_photo" :value="__('Cover Photo')" />
                         <x-text-input id="cover_photo" name="cover_photo" type="file" class="mt-1 block w-full" />
+                        @if($publication->cover_photo)
+                            <img src="{{ asset('storage/' . $publication->cover_photo) }}" alt="Cover Photo" width="100" class="mt-2">
+                        @endif
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="file" :value="__('File (Optional)')" />
-                        <x-text-input id="file" name="file" type="file" class="mt-1 block w-full" />
+                        <x-input-label for="files" :value="__('Files (Optional)')" />
+                        <x-text-input id="files" name="files[]" type="file" class="mt-1 block w-full" multiple />
+                        @foreach($publication->files as $file)
+                            <div class="mt-2">
+                                <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank" class="text-blue-500 underline">Download File</a>
+                            </div>
+                        @endforeach
                     </div>
 
                     <x-primary-button>

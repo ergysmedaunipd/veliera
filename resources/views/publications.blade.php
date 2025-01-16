@@ -1,6 +1,15 @@
 @extends('layouts.base')
 @section('content')
-
+    <style>
+        .posts article {
+            overflow-wrap: break-word;
+        }
+        .posts .image img {
+            height: 400px; /* Set a fixed height for all images */
+            object-fit: cover; /* Ensure the image covers the area */
+            width: 100%; /* Ensure the image takes the full width */
+        }
+    </style>
     <section>
         <header class="major">
             <h2> {{__('main.publications')}}</h2>

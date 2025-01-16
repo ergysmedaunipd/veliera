@@ -46,12 +46,14 @@
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="file" :value="__('File (Optional)')" />
-                        <x-file-input id="file" name="file" class="mt-1 block w-full" />
-                        @if($program->file)
-                            <a href="{{ asset('storage/' . $program->file) }}" target="_blank" class="mt-2 block text-blue-500 underline">Download Current File</a>
-                        @endif
-                        <x-input-error class="mt-2" :messages="$errors->get('file')" />
+                        <x-input-label for="files" :value="__('Files (Optional)')" />
+                        <x-file-input id="files" name="files[]" class="mt-1 block w-full" multiple />
+                        @foreach($program->files as $file)
+                            <div class="mt-2">
+                                <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank" class="text-blue-500 underline">Download File</a>
+                            </div>
+                        @endforeach
+                        <x-input-error class="mt-2" :messages="$errors->get('files')" />
                     </div>
 
                     <x-primary-button>{{ __('Update') }}</x-primary-button>

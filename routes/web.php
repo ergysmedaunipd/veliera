@@ -55,7 +55,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{banner}', [HomeController::class, 'destroy'])->name('destroy');
     });
 
-
     Route::prefix('core-values')->name('core-values.')->group(function() {
         Route::get('/', [CoreValueController::class, 'index'])->name('index');
         Route::get('create', [CoreValueController::class, 'create'])->name('create');

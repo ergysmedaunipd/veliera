@@ -2,12 +2,16 @@
     .active {
         font-weight: bold;
     }
+    #sidebar, #sidebar .inner, #sidebar nav, #sidebar section, #sidebar footer {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
 </style>
-<div id="sidebar">
-    <div class="inner">
+<div id="sidebar" style="width: 15em">
+    <div class="inner" style="padding: 0 0 0 2em; width: 15em" >
 
         <!-- Menu -->
-        <nav id="menu">
+        <nav id="menu" style="padding : 10em 0 0 0">
             <header class="major">
                 <h2>{{ __('main.menu') }}</h2>
             </header>
@@ -28,16 +32,15 @@
         </nav>
 
         <!-- Section -->
-        <section>
+        <section style="padding :0">
             <header class="major">
                 <h2>{{ __('main.get_in_touch') }}</h2>
             </header>
-            <p>{{$contact->message}}</p>
-            <ul class="contact">
-                <li class="icon solid fa-envelope"><a href="mailto:{{$contact->email}}">{{$contact->email}}</a></li>
-                <li class="icon solid fa-phone">{{$contact->phone}}</li>
-                <li class="icon solid fa-home"> {{$contact->address}} </li>
-            </ul>
+                 <a href="mailto:{{$contact->email}}">{{$contact->email}}</a>
+            <br>
+                    {{$contact->phone}}
+            <br>
+            {{$contact->address}}
         </section>
 
         <!-- Footer -->

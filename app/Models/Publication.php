@@ -10,11 +10,16 @@ class Publication extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ['title', 'description', 'cover_photo', 'file'];
+    protected $fillable = ['title', 'description', 'cover_photo'];
 
     public $translatable = [
         'title',
         'description',
     ];
+
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
 }
 

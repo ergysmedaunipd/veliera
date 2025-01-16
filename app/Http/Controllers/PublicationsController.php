@@ -43,24 +43,25 @@ class PublicationsController extends Controller
             'description' => 'required|string',
             'description_sq' => 'required|string',
             'cover_photo' => 'required|image|max:2048',
-            'file' => 'nullable|mimes:pdf,doc,docx,txt|max:10240',
-        ]);
+            'files.*' => 'nullable|mimes:pdf,doc,docx,txt,jpg,jpeg,png,gif,mp4,avi,mov,mp3,wav|max:10240',
+            ]);
 
         if ($request->hasFile('cover_photo')) {
             $validated['cover_photo'] = $request->file('cover_photo')->store('images', 'public');
-        }
-
-        if ($request->hasFile('file')) {
-            $validated['file'] = $request->file('file')->store('images', 'public');
         }
 
         $publication = new Publication();
         $publication->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
         $publication->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
         $publication->cover_photo = $validated['cover_photo'];
-        $publication->file = $validated['file'] ?? null;
-
         $publication->save();
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filePath = $file->store('files', 'public');
+                $publication->files()->create(['file_path' => $filePath]);
+            }
+        }
 
         return redirect()->route('publications.index')->with('success', 'Publication created successfully.');
     }
@@ -78,8 +79,8 @@ class PublicationsController extends Controller
             'description' => 'required|string',
             'description_sq' => 'required|string',
             'cover_photo' => 'nullable|image|max:2048',
-            'file' => 'nullable|mimes:pdf,doc,docx,txt|max:10240',
-        ]);
+            'files.*' => 'nullable|mimes:pdf,doc,docx,txt,jpg,jpeg,png,gif,mp4,avi,mov,mp3,wav|max:10240',
+            ]);
 
         if ($request->hasFile('cover_photo')) {
             if ($publication->cover_photo) {
@@ -88,19 +89,18 @@ class PublicationsController extends Controller
             $validated['cover_photo'] = $request->file('cover_photo')->store('images', 'public');
         }
 
-        if ($request->hasFile('file')) {
-            if ($publication->file) {
-                Storage::delete($publication->file);
-            }
-            $validated['file'] = $request->file('file')->store('images', 'public');
-        }
-
         $publication->setTranslations('title', ['en' => $request->title, 'sq' => $request->title_sq]);
         $publication->setTranslations('description', ['en' => $request->description, 'sq' => $request->description_sq]);
         $publication->cover_photo = $validated['cover_photo'] ?? $publication->cover_photo;
-        $publication->file = $validated['file'] ?? $publication->file;
 
         $publication->save();
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filePath = $file->store('files', 'public');
+                $publication->files()->create(['file_path' => $filePath]);
+            }
+        }
+
         return redirect()->route('publications.index')->with('success', 'Publication updated successfully.');
     }
 
